@@ -1,0 +1,21 @@
+Narrativa:
+
+Como vendedor
+Quero cadastrar um produto
+Para permitir realizar vendas
+
+Critérios de aceitação:
+
+Cenário 1
+Dado que o cliente está habilitado a fazer pedidos
+Quando registro um pedido
+Então sistema cria um pedido no estado “Criado”
+
+Cenário 2
+Dado que o cliente tem perfil “Especial”
+Quando registro um pedido
+Então sistema provê um desconto de 5% no pedido
+
+Cenário 3
+Quando incluo um pedido “Diamante”
+Então sistema informa o prazo de entrega “24 horas”
