@@ -1,38 +1,41 @@
-java:
+version: "2.0"
+services:
+  java:
     build: ./ambiente/java/
+    command: "true"
 
-nginx:
-    build: ./ambiente/nginx/
-    ports:
-        - 80:80
-    volumes_from:
-        - data
-
-tomcat-server:
+  web:
     build: ./ambiente/tomcat/
     ports:
-        - 8080:8080
+      - "8080:8080"
     links:
-        - mysql-server
-    volumes_from:
-        - data
+      - db
+    networks:
+      - webnet
 
-mysql-server:
+  db:
     build: ./ambiente/mysql/
-    volumes_from:
-        - data
     restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - webnet
+    volumes_from:
+      - store
     environment:
-        MYSQL_ROOT_PASSWORD: secret
-        MYSQL_DATABASE: conchayorodb
-        MYSQL_USER: conchayorouser
-        MYSQL_PASSWORD: conchayoropwd
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: conchayorodb
+      MYSQL_USER: conchayorouser
+      MYSQL_PASSWORD: conchayoropwd
 
-data:
+  store:
     build: ./ambiente/mysql/
+    networks:
+      - webnet
     volumes:
-        - ./data/www/html:/var/www/html
         - ./data/db:/var/lib/mysql
-        - ./data/webapps:/usr/local/tomcat/webapps
-        - ./data/webapps/logs:/usr/local/tomcat/logs
-    command: "true"
+        - ./data/web:/usr/local/tomcat/webapps
+        - ./data/web/logs:/usr/local/tomcat/logs
+
+networks:
+  webnet:

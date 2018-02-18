@@ -1,14 +1,6 @@
 #!/bin/sh
 
-#GUEST_IP=192.168.0.67
-
-echo 'Copiando produtos...'
-
-#git clone -b v0.0.1 http://github.com/valuedriven/conchayoro
-
 echo 'Preparando containeres ...'
-
-sudo rm -r data/
 
 docker kill $(docker ps -q)
 
@@ -16,11 +8,7 @@ docker-compose up -d
 
 echo 'Criando banco de dados ...'
 
-docker-compose exec mysql-server mysql -u root -psecret conchayorodb < banco/conchayorodb.sql
-
-#echo 'Copiando driver de banco de dados para Tomcat ...'
-
-#sudo cp conchayoro/lib/mysql-connector-java-5.1.5.jar /opt/tomcat/lib
+docker-compose exec db mysql -u root -psecret conchayorodb < banco/conchayorodb.sql
 
 echo 'Criando estrutura de diretórios para projeto web...'
 
@@ -36,7 +24,7 @@ docker run --rm -v "$PWD":/app -w /app java javac -verbose -cp 'lib/*'  -d 'conc
 
 echo "Gerando implantavel..."
 
-docker run --rm -v "$PWD":/app -w /app java jar cvf data/webapps/conchayoro.war -C conchayoro/src/main/webapp .
+docker run --rm -v "$PWD":/app -w /app java jar cvf conchayoro.war -C conchayoro/src/main/webapp .
 
 echo "Reiniciando conteiner web..."
 
@@ -44,5 +32,5 @@ echo "Reiniciando conteiner web..."
 
 echo "Acessando aplicação..."
 
-wget http://localhost:8080/conchayoro
+#wget http://localhost:8080/conchayoro
 

@@ -12,7 +12,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.user" value="conchayorouser" />
 			<property name="javax.persistence.jdbc.password" value="conchayoropwd" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-server/conchayorodb" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://db/conchayorodb" />
 
                         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
