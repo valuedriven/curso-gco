@@ -1,0 +1,38 @@
+java:
+    build: ./ambiente/java/
+
+nginx:
+    build: ./ambiente/nginx/
+    ports:
+        - 80:80
+    volumes_from:
+        - data
+
+tomcat-server:
+    build: ./ambiente/tomcat/
+    ports:
+        - 8080:8080
+    links:
+        - mysql-server
+    volumes_from:
+        - data
+
+mysql-server:
+    build: ./ambiente/mysql/
+    volumes_from:
+        - data
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: conchayorodb
+        MYSQL_USER: conchayorouser
+        MYSQL_PASSWORD: conchayoropwd
+
+data:
+    build: ./ambiente/mysql/
+    volumes:
+        - ./data/www/html:/var/www/html
+        - ./data/db:/var/lib/mysql
+        - ./data/webapps:/usr/local/tomcat/webapps
+        - ./data/webapps/logs:/usr/local/tomcat/logs
+    command: "true"

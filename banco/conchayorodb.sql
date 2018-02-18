@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Produto
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(100) NOT NULL,
 	unidade VARCHAR(50) NOT NULL,
-        tipoProduto VARCHAR(1) NOT NULL,
+        tipoProduto VARCHAR(1),
         precoUnitario DOUBLE NOT NULL,
         PRIMARY KEY (id)
 );
