@@ -1,1 +1,1 @@
-FROM alpine/git
+FROM git:alpine
