@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM java:alpine
 
 COPY . /app
 WORKDIR /app
