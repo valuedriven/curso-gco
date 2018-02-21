@@ -102,7 +102,6 @@ docker-compose run git branch
 echo 'Criando uma tag ...'
 
 docker-compose run git tag -a v0.0.1 -m "Versão inicial"
-docker-compose run git show v0.0.1
 docker-compose run git branch
 
 echo 'Retornando para ramo principal ...'
