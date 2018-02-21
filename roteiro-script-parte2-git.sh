@@ -115,7 +115,7 @@ docker-compose run git branch
 
 echo 'alterar arquivo index.html'
 
-sed '/\Bem vindo a Concha Y Oro!!!/a Manter produtos' -i 'conchayoro/src/main/webapp/index.html'
+sed '/\Bem vindo a Concha Y Oro!!!/a Manter Produtos' -i 'fonte/src/main/webapp/index.html'
 
 docker-compose run git add .
 
