@@ -1,9 +1,5 @@
 version: "2.0"
 services:
-  java:
-    build: ./ambiente/java/
-    command: "true"
-
   web:
     build: ./ambiente/tomcat/
     ports:
@@ -12,6 +8,53 @@ services:
       - db
     networks:
       - webnet
+
+  jenkins:
+    build: ./ambiente/jenkins/
+    ports:
+      - "8081:8081"
+    networks:
+      - webnet
+
+#  nexus:
+#    build: ./ambiente/nexus/
+#    ports:
+#      - "8082:8082"
+#    networks:
+#      - webnet
+
+#  sonar:
+#    build: ./ambiente/sonar/
+#    ports:
+#      - "8083:8083"
+#    networks:
+#      - webnet
+
+  java:
+    build: ./ambiente/java/
+    command: "true"
+    volumes:
+      - ".:/app"
+#    working_dir:
+#      "/app"
+
+  git:
+    build: ./ambiente/git/
+    command: "true"
+    volumes:
+      - ".:/root"
+      - ".:/git"
+
+  maven:
+    build: ./ambiente/maven/
+    command: "true"
+    environment:
+      MAVEN_CONFIG: ".m2"
+#      MAVEN_HOME: /usr/share/maven
+    volumes:
+      - "./data/maven:/.m2"
+#    working_dir:
+#      "/app"
 
   db:
     build: ./ambiente/mysql/
@@ -29,13 +72,18 @@ services:
       MYSQL_PASSWORD: conchayoropwd
 
   store:
-    build: ./ambiente/mysql/
+    image: alpine
     networks:
       - webnet
     volumes:
-        - ./data/db:/var/lib/mysql
-        - ./data/web:/usr/local/tomcat/webapps
-        - ./data/web/logs:/usr/local/tomcat/logs
+        - /data/db:/var/lib/mysql
+        - /data/web:/usr/local/tomcat/webapps
+        - /data/web/logs:/usr/local/tomcat/logs
+        - ./data/maven-repo:/root/.m2
 
 networks:
   webnet:
+
+volumes:
+  store:
+
