@@ -16,27 +16,13 @@ services:
     networks:
       - webnet
 
-#  nexus:
-#    build: ./ambiente/nexus/
-#    ports:
-#      - "8082:8082"
-#    networks:
-#      - webnet
-
-#  sonar:
-#    build: ./ambiente/sonar/
-#    ports:
-#      - "8083:8083"
-#    networks:
-#      - webnet
-
   java:
     build: ./ambiente/java/
     command: "true"
     volumes:
       - ".:/app"
-#    working_dir:
-#      "/app"
+    working_dir:
+      "/app"
 
   git:
     build: ./ambiente/git/
@@ -56,9 +42,24 @@ services:
 #    working_dir:
 #      "/app"
 
+#  nexus:
+#    build: ./ambiente/nexus/
+#    ports:
+#      - "8082:8082"
+#    networks:
+#      - webnet
+
+#  sonar:
+#    build: ./ambiente/sonar/
+#    ports:
+#      - "8083:8083"
+#    networks:
+#      - webnet
+
   db:
     build: ./ambiente/mysql/
     restart: always
+#    hostname: db
     ports:
       - "3306:3306"
     networks:
@@ -69,7 +70,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: conchayorodb
       MYSQL_USER: conchayorouser
-#      MYSQL_PASSWORD: conchayoropwd
+      MYSQL_PASSWORD: conchayoropwd
 
   store:
     image: alpine
@@ -79,7 +80,7 @@ services:
         - /data/db:/var/lib/mysql
         - /data/web:/usr/local/tomcat/webapps
         - /data/web/logs:/usr/local/tomcat/logs
-        - ./data/maven-repo:/root/.m2
+        - ./data/maven:/root/.m2
 
 networks:
   webnet:
