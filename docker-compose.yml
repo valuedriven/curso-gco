@@ -2,6 +2,7 @@ version: "2.0"
 services:
   web:
     build: ./ambiente/tomcat/
+    hostname: webserver
     ports:
       - "8080:8080"
     links:
@@ -15,12 +16,18 @@ services:
       - "8081:8081"
     networks:
       - webnet
+    environment:
+      JENKINS_OPTS: --httpPort=-1 --httpsPort=8081 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
+      JENKINS_HOME:
+
+    volumes:
+      - ./data/jenkins:/var/jenkins_home/
 
   java:
     build: ./ambiente/java/
     command: "true"
     volumes:
-      - ".:/app"
+      - ./data/app:/app
     working_dir:
       "/app"
 
@@ -33,21 +40,27 @@ services:
 
   maven:
     build: ./ambiente/maven/
-    command: "true"
-#    environment:
-#      MAVEN_CONFIG: ".m2"
-#      MAVEN_HOME: /usr/share/maven
+#    restart: always
+    links:
+      - nexus
     volumes:
-      - "./data/maven:/.m2"
-#    working_dir:
-#      "/app"
+      - "./data/app:/app"
+      - "./data/m2:/.m2"
+    working_dir:
+      "/app"
 
-#  nexus:
-#    build: ./ambiente/nexus/
-#    ports:
-#      - "8082:8082"
-#    networks:
-#      - webnet
+  nexus:
+    build: ./ambiente/nexus/
+    ports:
+      - "8082:8082"
+    networks:
+      - webnet
+    environment:
+      NEXUS_DATA: nexus-data
+      NEXUS_CONTEXT: /
+      INSTALL4J_ADD_VM_PARAMS: -Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs
+    volumes_from:
+      - store
 
 #  sonar:
 #    build: ./ambiente/sonar/
@@ -58,8 +71,7 @@ services:
 
   db:
     build: ./ambiente/mysql/
-    restart: always
-#    hostname: db
+    hostname: db
     ports:
       - "3306:3306"
     networks:
@@ -77,10 +89,10 @@ services:
     networks:
       - webnet
     volumes:
-        - /data/db:/var/lib/mysql
-        - /data/web:/usr/local/tomcat/webapps
-        - /data/web/logs:/usr/local/tomcat/logs
-        - ./data/maven:/root/.m2
+        - ./data/db:/var/lib/mysql
+        - ./data/web:/usr/local/tomcat/webapps
+        - ./data/web/logs:/usr/local/tomcat/logs
+        - ./data/nexus:/nexus-data
 
 networks:
   webnet:

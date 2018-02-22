@@ -2,8 +2,8 @@
 
 cp tomcat-users.xml /usr/local/tomcat/conf
 
-cp  context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+cp context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
-cp ./bibliotecas/mysql-connector-java-5.1.5.jar /usr/local/tomcat/lib
+cp mysql-connector-java-5.1.5.jar /usr/local/tomcat/lib
 
 

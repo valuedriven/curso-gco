@@ -2,7 +2,7 @@
 
 #validate: validate the project is correct and all necessary information is available
 #compile: compile the source code of the project
-#test: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+#test: test the compiled source code ing a suitable unit testing framework. These tests should not require the code be packaged or deployed
 #package: take the compiled code and package it in its distributable format, such as a JAR.
 #install: install the package into the local repository, for use as a dependency in other projects locally
 #deploy: done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.
@@ -14,50 +14,26 @@ echo 'Criando arquétivo maven ...'
 
 docker-compose run maven -B archetype:generate -DarchetypeArtifactId=maven-archetype-webapp  -DartifactId=conchayoroapp -DgroupId=br.com.conchayoro -Dpackage=br.com.conchayoro  -Dversion=1.0.0-SNAPSHOT
 
-docker-compose run git status
+docker-compose run maven clean -f conchayoroapp/pom.xml 
 
-docker run -it --rm -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean install -f conchayoroapp/pom.xml
+sudo cp -r fonte/src/main conchayoroapp/src
 
-docker run -it --rm -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven mvn compile -f conchayoroapp/pom.xml
+sudo cp artefatos/pom.xml-dependencias-integracao-nexus conchayoroapp/pom.xml
 
-docker run -it --rm -w /usr/src/mymaven maven mvn clean -f conchayoroapp/pom.xml
+docker-compose run maven compile -f conchayoroapp/pom.xml
 
-===
+docker-compose run maven package -f conchayoroapp/pom.xml
 
-Parei aqui
+ls conchayoroapp/target
 
+#Parei aqui.
 
-9. Criar implantável.
+cp conchayoro/pom.xml-integracao-maven-tomcat conchayoroapp/pom.xml
 
-$ mvn package -f conchayoroapp/pom.xml
-
-Observar o resultado de sucesso esperado.
-
-Observar o arquivo .war gerado no diretório “target” do projeto.
-
-$ ls conchayoroapp/target
+cp conchayoro/settings.xml-integracao-maven-tomcat .m2/settings.xml
 
 
-10. Preparar aplicação para publicação no conteiner web.
-
-$ cp conchayoro/pom.xml-integracao-maven-tomcat conchayoroapp/pom.xml
-
-$ cp conchayoro/settings.xml-integracao-maven-tomcat .m2/settings.xml
-
-
-Verificar alteração no arquivo pom.xml (na seção build).
-
-$ more conchayoroapp/pom.xml
-
-Verificar configuração do Maven.
-
-$ more .m2/settings.xml
-
-
-11. Publicar aplicação no conteiner web.
-
-$ mvn tomcat7:redeploy -f conchayoroapp/pom.xml
-
+mvn tomcat7:redeploy -f conchayoroapp/pom.xml
 
 Caso necessário, alterar permissão para publicação, utilizando o comando a seguir:
 
