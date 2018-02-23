@@ -18,14 +18,14 @@ services:
       - webnet
     environment:
       JENKINS_OPTS: --httpPort=-1 --httpsPort=8081 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
-#    volumes:
-#      - ./data/jenkins:/var/jenkins_home/
+    volumes:
+      - ./data/jenkins:/var/jenkins_home/
 
   java:
     build: ./ambiente/java/
     command: "true"
     volumes:
-      - ./data/app:/app
+      - .:/app
     working_dir:
       "/app"
 
@@ -41,9 +41,12 @@ services:
 #    restart: always
     links:
       - nexus
+#    volumes:
+#      - "./data/app:/app"
+#      - "./data/m2:/.m2"
     volumes:
-      - "./data/app:/app"
-      - "./data/m2:/.m2"
+      - .:/app
+      - ./data/m2:/app/m2
     working_dir:
       "/app"
 

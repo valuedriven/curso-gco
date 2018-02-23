@@ -10,40 +10,37 @@
 #clean: cleans up artifacts created by prior builds
 #site: generates site documentation for this project
 
+echo 'Configurando Maven...'
+
+cp artefatos/settings.xml-integracao-maven-nexus data/m2/settings.xml
+
+#cp artefatos/settings.xml-integracao-maven-tomcat .m2/settings.xml
+
+
 echo 'Criando arquétivo maven ...'
 
 docker-compose run maven -B archetype:generate -DarchetypeArtifactId=maven-archetype-webapp  -DartifactId=conchayoroapp -DgroupId=br.com.conchayoro -Dpackage=br.com.conchayoro  -Dversion=1.0.0-SNAPSHOT
 
-docker-compose run maven clean -f conchayoroapp/pom.xml 
+cp conchayoro/pom.xml-dependencias-integracao-nexus conchayoroapp/pom.xml
+
+#docker-compose run maven clean -f conchayoroapp/pom.xml 
 
 sudo cp -r fonte/src/main conchayoroapp/src
 
-sudo cp artefatos/pom.xml-dependencias-integracao-nexus conchayoroapp/pom.xml
 
 docker-compose run maven compile -f conchayoroapp/pom.xml
 
 docker-compose run maven package -f conchayoroapp/pom.xml
 
-ls conchayoroapp/target
 
-#Parei aqui.
+#mvn tomcat7:redeploy -f conchayoroapp/pom.xml
 
-cp conchayoro/pom.xml-integracao-maven-tomcat conchayoroapp/pom.xml
+#Caso necessário, alterar permissão para publicação, utilizando o comando a seguir:
 
-cp conchayoro/settings.xml-integracao-maven-tomcat .m2/settings.xml
+#sudo chmod -R 0755 /opt/tomcat/webapps
 
+#Acessar aplicação por meio do navegador.
 
-mvn tomcat7:redeploy -f conchayoroapp/pom.xml
-
-Caso necessário, alterar permissão para publicação, utilizando o comando a seguir:
-
-$ sudo chmod -R 0755 /opt/tomcat/webapps
-
-Acessar aplicação por meio do navegador.
-
-http://[GUEST_IP]:8080/conchayoroapp
-
-
-
+#http://[GUEST_IP]:8080/conchayoroapp
 
 
