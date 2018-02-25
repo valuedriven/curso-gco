@@ -16,13 +16,41 @@
     </server>
   </servers>
 
-  <mirrors>
+ <mirrors>
     <mirror>
-      <id>central</id>
-      <name>central</name>
-      <url>http://172.19.0.3:8081/repository/maven-group/</url>
+      <!--This sends everything else to /public -->
+      <id>nexus</id>
       <mirrorOf>*</mirrorOf>
+      <url>http://172.19.0.2:8081/repository/maven-group/</url>
     </mirror>
   </mirrors>
+
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <!--Enable snapshots for the built in central repo to direct -->
+      <!--all requests to nexus via the mirror -->
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+      </repositories>
+     <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
 
 </settings>

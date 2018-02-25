@@ -24,11 +24,11 @@ cp bibliotecas/* ${build_dir}/WEB-INF/lib
 echo "Gerando instalável..."
 docker-compose run java jar cvf conchayoro.war -C ${build_dir} .
 
-echo "Implantando instalável..."
+#echo "Implantando instalável..."
 
 #Utilizar interface gráfica do Tomcat
 
-echo "Acessando aplicação..."
+#echo "Acessando aplicação..."
 
 #curl http://localhost:8080/conchayoro
 
