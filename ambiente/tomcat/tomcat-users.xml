@@ -3,9 +3,10 @@
               xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
               version="1.0">
 
+  <role rolename="manager"/>
   <role rolename="manager-gui"/>
   <role rolename="manager-script"/>
   <role rolename="admin-gui"/>
-  <user username="manager" password="manager" roles="manager-gui,mager-script,admin-gui"/>
+  <user username="manager" password="manager" roles="manager,manager-gui,manager-script,admin-gui"/>
 
 </tomcat-users>

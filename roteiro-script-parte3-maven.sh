@@ -14,5 +14,11 @@ docker-compose run maven mvn install -f conchayoroapp/pom.xml
 
 docker-compose run maven mvn deploy -f conchayoroapp/pom.xml
 
+docker-compose run maven mvn tomcat7:deploy -f conchayoroapp/pom.xml
+
+docker-compose run maven mvn tomcat7:redeploy -f conchayoroapp/pom.xml
+
+
+
 
 

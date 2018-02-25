@@ -1,20 +1,25 @@
 #!/bin/sh
 
+data_dir=".data"
+maven_dir=".m2"
+
 echo 'Criando estrutura de diretórios e arquivos ...'
-mkdir -p data/nexus/work
+mkdir -p ${data_dir}/nexus/work
 mkdir -p conchayoroapp
-mkdir -p .m2
+mkdir -p ${maven_dir}
 
-sudo chmod g+rwx -R data
-sudo chmod g+rwx -R .m2
-sudo chmod 777 -R .m2
-sudo chown -R 200:200 data/nexus
+sudo chmod g+rwx -R ${data_dir}
+sudo chown -R 200:200 ${data_dir}/nexus
 
-cp artefatos/settings.xml-integracao-maven-nexus .m2/settings.xml
-cp artefatos/pom.xml-dependencias-integracao-nexus conchayoroapp/pom.xml
+sudo chmod g+rwx -R ${maven_dir}
+sudo chmod 777 -R ${maven_dir}
+
+cp artefatos/pom.xml-configuracoes conchayoroapp/pom.xml
+cp ambiente/maven/settings.xml-configuracoes ${maven_dir}/settings.xml
+
 cp -r fonte/src/ conchayoroapp/
 
-echo 'Realizando limpeza leve no docker...'
+echo 'Realizando limpeza no docker...'
 docker container prune -f
 docker image prune -f
 docker volume prune -f
@@ -24,8 +29,8 @@ docker network prune -f
 #docker rm $(docker ps -q)
 #docker rm $(docker images -q)
 
-#echo 'Removendo todos containers e imagens...'
-#docker rm $(docker ps -a -q) --force
+echo 'Removendo todos containers e imagens...'
+docker rm $(docker ps -a -q) --force
 #docker rmi $(docker images -a -q) --force
 
 echo 'Preparando containeres ...'
@@ -33,6 +38,5 @@ docker-compose up -d --build
 
 echo 'Criando banco de dados ...'
 docker-compose exec db mysql -u root -psecret conchayorodb < bancoscript/conchayorodb.sql
-
 
 

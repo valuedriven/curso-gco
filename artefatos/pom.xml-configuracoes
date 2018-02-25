@@ -8,25 +8,17 @@
   <name>conchayoroapp Maven Webapp</name>
   <url>http://maven.apache.org</url>
 	<repositories>
-		<repository>
-			<id>snapshot-repository.java.net</id>
-			<name>Java.net Snapshot Repository for Maven</name>
-			<url>https://maven.java.net/content/repositories/snapshots/</url>
-			<layout>default</layout>
-		</repository>
-
-		<repository>
-			<id>mvnrepository</id>
-			<name>https://mvnrepository.com/</name>
-			<url>http://central.maven.org/maven2/</url>
-			<layout>default</layout>
-		</repository>
-
+                <repository>
+                  <id>maven-group</id>
+                  <url>http://nexus:8081/repository/maven-group/</url>
+                </repository>
+       
 	</repositories>
 
 	<properties>
 		<jersey.version>2.22.1</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <surefire.version>2.20.1</surefire.version>
 	</properties>
 
 	<dependencyManagement>
@@ -102,20 +94,45 @@
 		</dependency>
 
 	</dependencies>
-	<build>
-		<finalName>conchayoroapp</finalName>
-		<plugins>
+  <build>
+    <finalName>conchayoro</finalName>
+    <plugins>
 	           <plugin>
                         <groupId>org.apache.tomcat.maven</groupId>
                         <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.1</version>
+                        <version>2.2</version>
                         <configuration>
-                           <url>http://localhost:8080/manager/text</url>
-                           <server>mytomcat</server>
-                           <path>/conchayoroapp</path>
+                           <url>http://web:8080/manager/text</url>
+                           <server>tomcat</server>
+                           <path>/conchayoro</path>
                         </configuration>
                    </plugin>
-		</plugins>
-	</build>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.version}</version>
+        <!-- lock down our surefire provider -->
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit3</artifactId>
+            <version>${surefire.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://nexus:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://nexus:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
 
 </project>

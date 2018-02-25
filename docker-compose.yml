@@ -2,7 +2,7 @@ version: "2.0"
 services:
   web:
     build: ./ambiente/tomcat/
-    hostname: webserver
+    hostname: web
     ports:
       - "8080:8080"
     links:
@@ -40,6 +40,7 @@ services:
     build: ./ambiente/maven/
     links:
       - nexus
+      - web
     networks:
       - webnet
     volumes:
@@ -91,7 +92,7 @@ services:
     networks:
       - webnet
     volumes:
-        - ./data/nexus:/nexus-data
+        - ./.data/nexus:/nexus-data
 
 networks:
   webnet:

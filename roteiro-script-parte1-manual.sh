@@ -1,7 +1,9 @@
 #!/bin/sh
 
+source_dir="fonte/src/main/"
+build_dir=".build"
+
 echo 'Criando estrutura de diretórios para build...'
-build_dir="build"
 mkdir -p ${build_dir}
 mkdir -p ${build_dir}/lib
 mkdir -p ${build_dir}/META-INF
