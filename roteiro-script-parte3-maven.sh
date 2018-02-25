@@ -1,22 +1,24 @@
 #!/bin/sh
 
-docker-compose run maven mvn clean -f conchayoroapp/pom.xml 
+maven_project="conchayoroapp/pom.xml"
+
+docker-compose run maven mvn clean -f ${maven_project}
 	
-docker-compose run maven mvn compile -f conchayoroapp/pom.xml
+docker-compose run maven mvn compile -f ${maven_project}
 
-docker-compose run maven mvn test -f conchayoroapp/pom.xml
+docker-compose run maven mvn test -f ${maven_project}
 
-docker-compose run maven mvn site -f conchayoroapp/pom.xml
+docker-compose run maven mvn site -f ${maven_project}
 
-docker-compose run maven mvn package -f conchayoroapp/pom.xml
+docker-compose run maven mvn package -f ${maven_project}
 
-docker-compose run maven mvn install -f conchayoroapp/pom.xml
+docker-compose run maven mvn install -f ${maven_project}
 
-docker-compose run maven mvn deploy -f conchayoroapp/pom.xml
+docker-compose run maven mvn deploy -f ${maven_project}
 
-docker-compose run maven mvn tomcat7:deploy -f conchayoroapp/pom.xml
+docker-compose run maven mvn tomcat7:deploy -f ${maven_project}
 
-docker-compose run maven mvn tomcat7:redeploy -f conchayoroapp/pom.xml
+docker-compose run maven mvn tomcat7:redeploy -f ${maven_project}
 
 
 
