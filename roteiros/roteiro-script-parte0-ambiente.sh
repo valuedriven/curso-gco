@@ -5,11 +5,11 @@ maven_dir=".m2"
 
 echo 'Criando estrutura de diretórios e arquivos ...'
 mkdir -p ${data_dir}/nexus/work
-mkdir -p conchayoroapp
 mkdir -p ${maven_dir}
+mkdir -p conchayoroapp
 
-sudo chmod g+rwx -R ${data_dir}
-sudo chown -R 200:200 ${data_dir}/nexus
+#sudo chmod g+rwx -R ${data_dir}
+#sudo chown -R 200:200 ${data_dir}/nexus
 
 sudo chmod g+rwx -R ${maven_dir}
 sudo chmod 777 -R ${maven_dir}

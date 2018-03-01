@@ -1,6 +1,4 @@
-FROM jenkins:alpine
-
-ENV JENKINS_HOME=/usr/local/Jenkins
+FROM jenkins/jenkins:lts
 
 EXPOSE 8082
 

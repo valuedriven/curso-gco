@@ -10,16 +10,16 @@ services:
     networks:
       - webnet
 
-#  jenkins:
-#    build: ./ambiente/jenkins/
-#    ports:
-#      - "8082:8082"
-#    networks:
-#      - webnet
-#    environment:
-#      JENKINS_OPTS: --httpPort=-1 --httpsPort=8082 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
-#    volumes:
-#      - ./.data/jenkins:/var/jenkins_home/
+  jenkins:
+    build: ./ambiente/jenkins/
+    ports:
+      - "8082:8082"
+    networks:
+      - webnet
+    environment:
+      JENKINS_OPTS: --httpPort=-1 --httpsPort=8082 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
+    volumes_from:
+      - store
 
   java:
     build: ./ambiente/java/
@@ -63,7 +63,6 @@ services:
     volumes_from:
       - store
 
-
 #  sonar:
 #    build: ./ambiente/sonar/
 #    ports:
@@ -92,7 +91,9 @@ services:
     networks:
       - webnet
     volumes:
-        - ./.data/nexus:/nexus-data
+      - ./.data/nexus:/nexus-data
+      - ./.data/jenkins:/usr/local/Jenkins
+#     - ./.data/jenkins:/var/jenkins_home/
 
 networks:
   webnet:
