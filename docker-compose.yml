@@ -1,4 +1,4 @@
-version: "2.0"
+version: "2"
 services:
   web:
     build: ./ambiente/tomcat/
@@ -17,9 +17,9 @@ services:
     networks:
       - webnet
     environment:
-      JENKINS_OPTS: --httpPort=-1 --httpsPort=8082 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
-    volumes_from:
-      - store
+      JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false 
+#    volumes_from:
+#      - store
 
   java:
     build: ./ambiente/java/
@@ -57,7 +57,7 @@ services:
     networks:
       - webnet
     environment:
-      NEXUS_DATA: nexus-data
+      NEXUS_DATA: /nexus-data
       NEXUS_CONTEXT: /
       INSTALL4J_ADD_VM_PARAMS: -Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs
     volumes_from:
@@ -85,18 +85,18 @@ services:
     working_dir:
       "/app/db"
 
-
   store:
     image: alpine
     networks:
       - webnet
     volumes:
-      - ./.data/nexus:/nexus-data
-      - ./.data/jenkins:/usr/local/Jenkins
-#     - ./.data/jenkins:/var/jenkins_home/
+      - ./.data/nexus:${NEXUS_DATA}
+      - /var/jenkins_home/
+
 
 networks:
   webnet:
+
 
 volumes:
   store:

@@ -1,6 +1,6 @@
 FROM sonatype/nexus3
 
-ENV NEXUS_DATA=/nexus-data
+#ENV NEXUS_DATA /nexus-data
 
 RUN chown -R ${NEXUS_USER}:${NEXUS_USER} ${NEXUS_HOME} ${NEXUS_DATA} ${SONATYPE_WORK}
 

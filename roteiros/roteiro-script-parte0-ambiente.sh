@@ -2,22 +2,20 @@
 
 data_dir=".data"
 maven_dir=".m2"
+nexus_dir=${data_dir}/nexus
 
 echo 'Criando estrutura de diretórios e arquivos ...'
-mkdir -p ${data_dir}/nexus/work
+mkdir -p ${nexus_dir}
 mkdir -p ${maven_dir}
-mkdir -p conchayoroapp
+sudo chown -R 200:200 ${nexus_dir}
 
-#sudo chmod g+rwx -R ${data_dir}
-#sudo chown -R 200:200 ${data_dir}/nexus
-
+echo 'Configurações para projeto maven...'
 sudo chmod g+rwx -R ${maven_dir}
 sudo chmod 777 -R ${maven_dir}
-
+mkdir -p conchayoroapp
+cp -r fonte/src/ conchayoroapp/
 cp artefatos/pom.xml-configuracoes conchayoroapp/pom.xml
 cp ambiente/maven/settings.xml-configuracoes ${maven_dir}/settings.xml
-
-cp -r fonte/src/ conchayoroapp/
 
 echo 'Realizando limpeza no docker...'
 docker container prune -f
