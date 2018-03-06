@@ -13,4 +13,5 @@ git-parameter:0.9.1
 matrix-auth:2.2
 email-ext:2.61
 mailer:1.20
+blueocean:1.4.2
 
