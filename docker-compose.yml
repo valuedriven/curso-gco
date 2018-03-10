@@ -16,13 +16,14 @@ services:
       - "8082:8082"
     networks:
       - webnet
+    links:
+      - nexus
+
     environment:
-      JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false 
+      JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false
     volumes:
       - jenkins-data:/var/jenkins_home
-      - jenkins-home:/home
-      - /var/run/docker.sock:/var/run/docker.sock
-
+#     - /var/run/docker.sock:/var/run/docker.sock
 
   java:
     build: ./ambiente/java/
@@ -97,12 +98,6 @@ volumes:
   jenkins-data:
     driver_opts:
       type: none
-      device: ${PWD}/.jenkins/data
-      o: bind
-
-  jenkins-home:
-    driver_opts:
-      type: none
-      device: ${PWD}/.jenkins/home
+      device: ${PWD}/.jenkins
       o: bind
 

@@ -15,7 +15,7 @@ sudo chown -R 200:200 ${nexus_dir}
 sudo chmod g+rwx -R ${maven_dir}
 sudo chmod 777 -R ${maven_dir}
 
-cp ambiente/maven/settings.xml-configuracoes ${maven_dir}/settings.xml
+cp ambiente/maven/settings.xml ${maven_dir}/settings.xml
 
 echo 'Realizando limpeza no docker...'
 docker container prune -f

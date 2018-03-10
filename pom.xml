@@ -9,8 +9,8 @@
   <url>http://maven.apache.org</url>
 	<repositories>
                 <repository>
-                  <id>maven-group</id>
-                  <url>http://nexus:8081/repository/maven-group/</url>
+                  <id>maven-public</id>
+                  <url>http://nexus:8081/repository/maven-public/</url>
                 </repository>
        
 	</repositories>
@@ -112,7 +112,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire.version}</version>
-        <!-- lock down our surefire provider -->
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.surefire</groupId>
