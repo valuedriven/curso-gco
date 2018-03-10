@@ -18,8 +18,11 @@ services:
       - webnet
     environment:
       JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false 
-#    volumes_from:
-#      - store
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-home:/home
+      - /var/run/docker.sock:/var/run/docker.sock
+
 
   java:
     build: ./ambiente/java/
@@ -63,13 +66,6 @@ services:
     volumes_from:
       - store
 
-#  sonar:
-#    build: ./ambiente/sonar/
-#    ports:
-#      - "8083:8083"
-#    networks:
-#      - webnet
-
   db:
     build: ./ambiente/mysql/
     hostname: db
@@ -91,8 +87,6 @@ services:
       - webnet
     volumes:
       - ./.data/nexus:${NEXUS_DATA}
-      - /var/jenkins_home/
-
 
 networks:
   webnet:
@@ -100,4 +94,15 @@ networks:
 
 volumes:
   store:
+  jenkins-data:
+    driver_opts:
+      type: none
+      device: ${PWD}/.jenkins/data
+      o: bind
+
+  jenkins-home:
+    driver_opts:
+      type: none
+      device: ${PWD}/.jenkins/home
+      o: bind
 

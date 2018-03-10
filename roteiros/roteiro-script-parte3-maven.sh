@@ -1,24 +1,27 @@
 #!/bin/sh
 
-maven_project="conchayoroapp/pom.xml"
+echo 'Preparando containeres ...'
+docker-compose up -d
 
-docker-compose run maven mvn clean -f ${maven_project}
+echo 'Executando ciclo clean, compile, test, site, package, install, deploy...'
+
+docker-compose run --rm maven mvn clean
 	
-docker-compose run maven mvn compile -f ${maven_project}
+docker-compose run --rm maven mvn compile
 
-docker-compose run maven mvn test -f ${maven_project}
+docker-compose run --rm maven mvn test
 
-docker-compose run maven mvn site -f ${maven_project}
+docker-compose run --rm maven mvn site
 
-docker-compose run maven mvn package -f ${maven_project}
+docker-compose run --rm maven mvn package
 
-docker-compose run maven mvn install -f ${maven_project}
+docker-compose run --rm maven mvn install
 
-docker-compose run maven mvn deploy -f ${maven_project}
+docker-compose run --rm maven mvn deploy
 
-docker-compose run maven mvn tomcat7:deploy -f ${maven_project}
+docker-compose run --rm maven mvn tomcat7:deploy
 
-docker-compose run maven mvn tomcat7:redeploy -f ${maven_project}
+docker-compose run --rm maven mvn tomcat7:redeploy
 
 
 
