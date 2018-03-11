@@ -137,6 +137,9 @@
           <providerImplementations>
               <git>jgit</git>
           </providerImplementations>
+          <checkModificationExcludes>
+            <checkModificationExclude>pom.xml</checkModificationExclude>
+          </checkModificationExcludes>
         </configuration>
 
             <dependencies>
