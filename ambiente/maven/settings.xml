@@ -5,15 +5,23 @@
 
   <servers>
     <server>
+      <id>github.com</id>
+      <username>junilson@hotmail.com</username>
+      <password>gco20!8</password>
+    </server>
+
+    <server>
 	<id>tomcat</id>
 	<username>manager</username>
 	<password>manager</password>
     </server>
+
     <server>
       <id>nexus-snapshots</id>
       <username>admin</username>
       <password>admin123</password>
     </server>
+
     <server>
       <id>nexus-releases</id>
       <username>admin</username>
