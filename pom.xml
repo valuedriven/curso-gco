@@ -119,6 +119,8 @@
               <git>jgit</git>
           </providerImplementations>
           <goals>compile</goals>
+          <username>junilson@hotmail.com</username>
+          <password>gco20!8</password>
         </configuration>
         <dependencies>
          <dependency>
