@@ -1,0 +1,16 @@
+cloudbees-folder:6.3
+build-name-setter:1.6.8
+build-timeout:1.19
+timestamper:1.8.9
+ws-cleanup:0.34
+credentials-binding:1.15
+workflow-aggregator:2.5
+github-branch-source:2.3.2
+pipeline-github-lib:1.0
+pipeline-stage-view:2.9
+git:3.8.0
+git-parameter:0.9.1
+matrix-auth:2.2
+email-ext:2.61
+mailer:1.20
+blueocean:1.4.2
