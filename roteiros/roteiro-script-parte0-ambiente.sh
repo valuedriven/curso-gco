@@ -1,19 +1,19 @@
 #!/bin/sh
 
 data_dir=".data"
-maven_dir=".m2"
-jenkins_dir=".jenkins"
+jenkins_dir=${data_dir}/jenkins
 nexus_dir=${data_dir}/nexus
+maven_dir=${data_dir}/maven
 
 echo 'Criando estrutura de diretórios e arquivos ...'
-mkdir -p ${nexus_dir}
+mkdir -p ${nexus_dir}/data
 mkdir -p ${maven_dir}
 mkdir -p ${jenkins_dir}/data
 mkdir -p ${jenkins_dir}/home
 
 sudo chown -R 200:200 ${nexus_dir}
 sudo chmod g+rwx -R ${maven_dir}
-sudo chmod 777 -R ${maven_dir}
+#sudo chmod 777 -R ${maven_dir}
 
 cp ambiente/maven/settings.xml ${maven_dir}/settings.xml
 
