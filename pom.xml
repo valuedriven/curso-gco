@@ -3,7 +3,7 @@
   <groupId>br.com.conchayoro</groupId>
   <artifactId>conchayoro</artifactId>
   <packaging>war</packaging>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>conchayoroapp Maven Webapp</name>
   <url>http://www.conchayoro.com</url>
 
@@ -21,7 +21,7 @@
         <connection>${repository.url}</connection>
         <developerConnection>${repository.url}</developerConnection>
         <url>${repository.url}</url>
-         <tag>conchayoro-1.0</tag>
+         <tag>conchayoro-1.0.0</tag>
   </scm>
 
 	<repositories>
