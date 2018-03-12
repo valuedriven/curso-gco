@@ -20,14 +20,14 @@ services:
       - nexus
     environment:
       JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false
-    volumes:
-      - jenkins-data:/var/jenkins_home
+    volumes_from:
+      - store
 
   java:
     build: ./ambiente/java/
     command: "true"
-    volumes:
-      - .:/app
+    volumes_from:
+      - store
     working_dir:
       "/app"
 
@@ -45,9 +45,8 @@ services:
       - web
     networks:
       - webnet
-    volumes:
-      - "./.m2:/root/.m2"
-      - ".:/usr/src/mymaven"
+    volumes_from:
+      - store
     working_dir:
        /usr/src/mymaven
 
@@ -93,17 +92,36 @@ services:
     networks:
       - webnet
     volumes:
-      - ./.data/nexus:${NEXUS_DATA}
+      - nexus-data:${NEXUS_DATA}
+      - jenkins-data:/var/jenkins_home
+      - maven-data:/root/.m2
+      - app:/usr/src/mymaven
+      - app:/app # java
 
 networks:
   webnet:
-
 
 volumes:
   store:
   jenkins-data:
     driver_opts:
       type: none
-      device: ${PWD}/.jenkins
+      device: ${PWD}/.data/jenkins
       o: bind
+  nexus-data:
+    driver_opts:
+      type: none
+      device: ${PWD}/.data/nexus
+      o: bind
+  maven-data:
+    driver_opts:
+      type: none
+      device: ${PWD}/.data/maven
+      o: bind
+  app:
+    driver_opts:
+      type: none
+      device: ${PWD}
+      o: bind
+
 
