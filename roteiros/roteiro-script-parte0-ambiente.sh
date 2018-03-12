@@ -4,12 +4,15 @@ data_dir=".data"
 jenkins_dir=${data_dir}/jenkins
 nexus_dir=${data_dir}/nexus
 maven_dir=${data_dir}/maven
+nginx_dir=${data_dir}/nginx
 
 echo 'Criando estrutura de diretórios e arquivos ...'
 mkdir -p ${nexus_dir}/data
 mkdir -p ${maven_dir}
+mkdir -p ${nginx_dir}
 mkdir -p ${jenkins_dir}/data
 mkdir -p ${jenkins_dir}/home
+
 
 sudo chown -R 200:200 ${nexus_dir}
 sudo chmod g+rwx -R ${maven_dir}
