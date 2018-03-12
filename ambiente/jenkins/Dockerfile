@@ -1,5 +1,4 @@
-#FROM jenkins/jenkins:alpine
-FROM  jenkinsci/blueocean
+FROM  jenkinsci/blueocean:1.4.2
 
 ENV JAVA_OPTS "-Djenkins.install.runSetupWizard=false"
 

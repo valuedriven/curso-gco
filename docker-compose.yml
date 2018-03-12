@@ -1,15 +1,5 @@
 version: "2"
 services:
-  nginx:
-    build: ./ambiente/nginx/
-    ports:
-      - 4080:80
-#    environment:
-#      NGINX_HOST: gitserver.conchayoro.com
-#      NGINX_PORT: 80
-    volumes_from:
-      - store
-
   web:
     build: ./ambiente/tomcat/
     hostname: web
@@ -107,7 +97,6 @@ services:
       - maven-data:/root/.m2
       - app:/usr/src/mymaven
       - app:/app # java
-      - gitnginx:/gitnginx
 
 networks:
   webnet:
@@ -135,9 +124,4 @@ volumes:
       device: ${PWD}
       o: bind
 
-  gitnginx:
-    driver_opts:
-      type: none
-      device: ${PWD}/.data/nginx
-      o: bind
 
