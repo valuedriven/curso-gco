@@ -8,7 +8,6 @@ maven_dir=${data_dir}/maven
 
 mkdir -p ${nexus_dir}/data
 mkdir -p ${maven_dir}
-mkdir -p ${apache_dir}/git
 mkdir -p ${jenkins_dir}/data
 mkdir -p ${jenkins_dir}/home
 
