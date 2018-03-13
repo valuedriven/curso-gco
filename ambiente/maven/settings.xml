@@ -57,6 +57,16 @@
         </pluginRepository>
       </pluginRepositories>
     </profile>
+
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+      <sonar.host.url>http://sonar:8083</sonar.host.url>
+      </properties>
+    </profile>
   </profiles>
 
   <activeProfiles>

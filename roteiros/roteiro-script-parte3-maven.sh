@@ -28,9 +28,10 @@ docker-compose run --rm maven mvn deploy
 echo 'Executando deploy Tomcat...'
 
 docker-compose run --rm maven mvn tomcat7:deploy
-
 docker-compose run --rm maven mvn tomcat7:redeploy
 
+echo 'Publicando no Sonar...'
+docker-compose run --rm maven mvn sonar:sonar -Dsonar.host.url=http://sonar:9000
 
 
 
