@@ -25,10 +25,6 @@ docker image prune -f
 docker volume prune -f
 docker network prune -f
 
-#echo 'Removendo containers e imagens não usados...'
-#docker rm $(docker ps -q)
-#docker rm $(docker images -q)
-
 echo 'Removendo todos containers e imagens...'
 #docker rm $(docker ps -a -q) --force
 #docker rmi $(docker images -a -q) --force
@@ -39,4 +35,3 @@ docker-compose up -d --build
 echo 'Criando banco de dados ...'
 docker-compose exec db mysql -u root -psecret conchayorodb < bancoscript/conchayorodb.sql
 
-#Criar repositórios no Nexus
