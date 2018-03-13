@@ -1,0 +1,123 @@
+version: "2"
+services:
+  web:
+    build: ./ambiente/tomcat/
+    hostname: web
+    ports:
+      - "8080:8080"
+    links:
+      - db
+    networks:
+      - webnet
+
+#  jenkins:
+#    build: ./ambiente/jenkins/
+#    ports:
+#      - "8082:8082"
+#    networks:
+#      - webnet
+#    links:
+#      - nexus
+#    environment:
+#      JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false
+#    volumes:
+#      - jenkins-data:/var/jenkins_home
+
+
+  java:
+    build: ./ambiente/java/
+    command: "true"
+    volumes:
+      - .:/app
+    working_dir:
+      "/app"
+
+  git:
+    build: ./ambiente/git/
+    command: "true"
+    volumes:
+      - ".:/root"
+      - ".:/git"
+
+  maven:
+    build: ./ambiente/maven/
+    links:
+      - nexus
+      - web
+      - sonar
+    networks:
+      - webnet
+    volumes:
+      - "./.m2:/root/.m2"
+      - ".:/usr/src/mymaven"
+    working_dir:
+       /usr/src/mymaven
+
+  nexus:
+    build: ./ambiente/nexus/
+    hostname: nexus
+    ports:
+      - "8081:8081"
+    networks:
+      - webnet
+    environment:
+      NEXUS_DATA: /nexus-data
+      NEXUS_CONTEXT: /
+      INSTALL4J_ADD_VM_PARAMS: -Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs
+    volumes:
+      - ".data/nexus:${NEXUS_DATA}"
+
+  db:
+    build: ./ambiente/mysql/
+    hostname: db
+    ports:
+      - "3306:3306"
+    networks:
+      - webnet
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: conchayorodb
+      MYSQL_USER: conchayorouser
+      MYSQL_PASSWORD: conchayoropwd
+    working_dir:
+      "/app/db"
+
+#  store:
+#    image: alpine
+#    networks:
+#      - webnet
+#    volumes:
+#     - nexus-data:${NEXUS_DATA}
+#     - jenkins-data:/var/jenkins_home
+
+  sonar:
+    build: ./ambiente/sonar/
+    hostname: sonar
+    ports:
+      - "8083:9000"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
+volumes:
+  store:
+  jenkins-data:
+    driver_opts:
+      type: none
+      device: .data/jenkins
+      o: bind
+  nexus-data:
+    driver_opts:
+      type: none
+      device: .data/nexus
+      o: bind
+  maven-data:
+    driver_opts:
+      type: none
+      device: ./.data/maven
+      o: bind
+
+
+
