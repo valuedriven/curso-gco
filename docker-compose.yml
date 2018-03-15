@@ -26,8 +26,8 @@ services:
   java:
     build: ./ambiente/java/
     command: "true"
-    volumes_from:
-      - store
+    volumes:
+      - .:/app
     working_dir:
       "/app"
 
@@ -81,15 +81,14 @@ services:
       "/app/db"
 
   store:
-    image: alpine
+    build: ./ambiente/store/
     networks:
       - webnet
     volumes:
-      - nexus-data:${NEXUS_DATA}
-      - jenkins-data:/var/jenkins_home
-      - maven-data:/root/.m2
-      - app:/usr/src/mymaven
-      - app:/app # java
+      - /nexus-data
+      - /var/jenkins_home
+      - /root/.m2
+      - .:/usr/src/mymaven
 
   sonar:
     build: ./ambiente/sonar/
@@ -102,27 +101,7 @@ services:
 networks:
   webnet:
 
+
 volumes:
   store:
-  jenkins-data:
-    driver_opts:
-      type: none
-      device: ${PWD}/.data/jenkins
-      o: bind
-  nexus-data:
-    driver_opts:
-      type: none
-      device: ${PWD}/.data/nexus
-      o: bind
-  maven-data:
-    driver_opts:
-      type: none
-      device: ${PWD}/.data/maven
-      o: bind
-  app:
-    driver_opts:
-      type: none
-      device: ${PWD}
-      o: bind
-
 

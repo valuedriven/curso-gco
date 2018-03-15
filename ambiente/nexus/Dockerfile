@@ -1,8 +1,8 @@
 FROM sonatype/nexus3:3.9.0
 
-#ENV NEXUS_DATA /nexus-data
-
 RUN chown -R ${NEXUS_USER}:${NEXUS_USER} ${NEXUS_HOME} ${NEXUS_DATA} ${SONATYPE_WORK}
+
+VOLUME /nexus-data
 
 EXPOSE 8081
 
