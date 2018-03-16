@@ -46,8 +46,11 @@ services:
       - sonar
     networks:
       - webnet
+#    volumes:
+#      - .m2:/root/.m2
+#      - .:/usr/src/mymaven
     volumes_from:
-      - store
+      - store 
     working_dir:
        /usr/src/mymaven
 
@@ -64,6 +67,14 @@ services:
       INSTALL4J_ADD_VM_PARAMS: -Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs
     volumes_from:
       - store
+
+  sonar:
+    build: ./ambiente/sonar/
+    hostname: sonar
+    ports:
+      - "8083:9000"
+    networks:
+      - webnet
 
   db:
     build: ./ambiente/mysql/
@@ -90,13 +101,6 @@ services:
       - /root/.m2
       - .:/usr/src/mymaven
 
-  sonar:
-    build: ./ambiente/sonar/
-    hostname: sonar
-    ports:
-      - "8083:9000"
-    networks:
-      - webnet
 
 networks:
   webnet:
