@@ -43,12 +43,8 @@ services:
     links:
       - nexus
       - web
-      - sonar
     networks:
       - webnet
-#    volumes:
-#      - .m2:/root/.m2
-#      - .:/usr/src/mymaven
     volumes_from:
       - store 
     working_dir:
@@ -68,14 +64,6 @@ services:
     volumes_from:
       - store
 
-  sonar:
-    build: ./ambiente/sonar/
-    hostname: sonar
-    ports:
-      - "8083:9000"
-    networks:
-      - webnet
-
   db:
     build: ./ambiente/mysql/
     hostname: db
@@ -90,6 +78,7 @@ services:
       MYSQL_PASSWORD: conchayoropwd
     working_dir:
       "/app/db"
+    
 
   store:
     build: ./ambiente/store/
