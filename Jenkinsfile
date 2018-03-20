@@ -2,12 +2,6 @@ pipeline {
 
     agent any 
 
-    environment {
-    
-        COMPOSE_FILE = "docker-compose.yml"
-
-    }
-
     stages {
 
 
@@ -15,8 +9,9 @@ pipeline {
 
         steps {
 
-          sh "ls -la"
-          sh "docker-composer up -d --build"
+          sh "mvn clean --settings ambiente/maven/settings.xml"
+          sh "mvn compile --settings ambiente/maven/settings.xml"
+          sh "mvn package --settings ambiente/maven/settings.xml"
 
         }
 
