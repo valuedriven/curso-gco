@@ -2,12 +2,6 @@ pipeline {
 
     agent any 
 
-#    environment {
-#
-#        COMPOSE_PROJECT_NAME = "docker-compose.yml"
-#
-#    }
-
     stages {
 
       stage("Commit") {
@@ -15,6 +9,8 @@ pipeline {
         steps {
 
           sh "echo '${COMPOSE_PROJECT_NAME}'"
+
+          sh "ls -la"
 
         }
 
