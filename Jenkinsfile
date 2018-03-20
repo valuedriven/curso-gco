@@ -2,26 +2,32 @@ pipeline {
 
     agent any 
 
+    environment {
+
+        COMPOSE_PROJECT_NAME = "docker-compose.yml"
+
+    }
+
     stages {
 
-      stage('Commit') {
+      stage("Commit") {
 
         steps {
 
-          sh 'echo ${COMPOSE_PROJECT_NAME}"'
+          sh "echo '${COMPOSE_PROJECT_NAME}'"
 
         }
 
       }
 
-      stage('Acceptance') { 
+      stage("Aceitação") { 
         steps {
-          sh 'echo "acceptance stage"'
+          sh "echo 'estagio Acceptance'"
         }
       }
-      stage('Deliver') { 
+      stage("Entrega") { 
         steps {
-          sh 'echo "deliver stage"'
+          sh "echo 'deliver stage'"
         }
       }
    }
