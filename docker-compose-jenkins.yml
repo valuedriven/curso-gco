@@ -1,0 +1,47 @@
+version: "2"
+services:
+  jenkins:
+    build: ./ambiente/jenkins/
+    ports:
+      - "8082:8082"
+    networks:
+      - webnet
+    links:
+      - nexus
+    environment:
+      JENKINS_OPTS: --httpPort=8082 -Djenkins.install.runSetupWizard=false
+    volumes_from:
+      - store
+
+  nexus:
+    build: ./ambiente/nexus/
+    hostname: nexus
+    ports:
+      - "8081:8081"
+    networks:
+      - webnet
+    environment:
+      NEXUS_DATA: /nexus-data
+      NEXUS_CONTEXT: /
+      INSTALL4J_ADD_VM_PARAMS: -Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs
+    volumes_from:
+      - store
+
+  store:
+    build: ./ambiente/store/
+    networks:
+      - webnet
+    volumes:
+      - /nexus-data
+      - /var/jenkins_home
+      - /root/.m2
+      - .:/usr/src/mymaven
+
+
+networks:
+  webnet:
+
+
+volumes:
+  store:
+

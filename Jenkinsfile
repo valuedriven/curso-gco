@@ -1,20 +1,22 @@
 pipeline {
+
     agent any 
 
     stages {
+
       stage('Commit') {
+
         steps {
-          sh 'echo "commit stage"'
+
+          sh 'echo ${COMPOSE_PROJECT_NAME}"
+
         }
+
       }
+
       stage('Acceptance') { 
         steps {
           sh 'echo "acceptance stage"'
-        }
-        post {
-          always {
-            junit 'target/surefire-reports/*.xml' 
-          }
         }
       }
       stage('Deliver') { 
@@ -23,4 +25,11 @@ pipeline {
         }
       }
    }
+   post {
+        always {
+            sh "docker-compose down -v"
+        }
+    }
 }
+
+
