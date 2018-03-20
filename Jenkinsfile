@@ -8,7 +8,7 @@ pipeline {
 
         steps {
 
-          sh 'echo ${COMPOSE_PROJECT_NAME}"
+          sh 'echo ${COMPOSE_PROJECT_NAME}"'
 
         }
 
