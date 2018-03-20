@@ -1,4 +1,4 @@
-job('conchayro') {
+job('conchayoro') {
     scm {
         git('http://github.com/valuedriven/curso-gco')
     }
