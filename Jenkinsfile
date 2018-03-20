@@ -2,11 +2,11 @@ pipeline {
 
     agent any 
 
-    environment {
-
-        COMPOSE_PROJECT_NAME = "docker-compose.yml"
-
-    }
+#    environment {
+#
+#        COMPOSE_PROJECT_NAME = "docker-compose.yml"
+#
+#    }
 
     stages {
 
