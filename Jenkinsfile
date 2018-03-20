@@ -2,15 +2,21 @@ pipeline {
 
     agent any 
 
+    environment {
+    
+        COMPOSE_FILE = "docker-compose.yml"
+
+    }
+
     stages {
+
 
       stage("Commit") {
 
         steps {
 
-          sh "echo '${COMPOSE_PROJECT_NAME}'"
-
           sh "ls -la"
+          sh "docker-composer up -d --build"
 
         }
 
