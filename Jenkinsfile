@@ -26,17 +26,27 @@ pipeline {
       }
 
       stage("Aceitação") { 
+
         steps {
+
           sh "mvn tomcat7:redeploy --settings ambiente/maven/settings.xml"
 
         }
+
       }
+
       stage("Entrega") { 
+
         steps {
+
           sh "echo 'Estágio de entrega'"
+
         }
+
       }
+
    }
+
 }
 
 

@@ -9,9 +9,9 @@ job('conchayoro/compile-package') {
     }
     
     steps {
-        shell('mvn clean --settings ambiente/maven/settings.xml')
-        shell('mvn compile --settings ambiente/maven/settings.xml')
-        shell('mvn package --settings ambiente/maven/settings.xml')
+        maven('clean --settings ambiente/maven/settings.xml')
+        maven('compile --settings ambiente/maven/settings.xml')
+        maven('package --settings ambiente/maven/settings.xml')
     }
 }
 
@@ -21,8 +21,8 @@ job('conchayoro/install-deploy') {
     }
 
     steps {
-        shell('mvn install --settings ambiente/maven/settings.xml')
-        shell('mvn deploy --settings ambiente/maven/settings.xml')
+        maven('install --settings ambiente/maven/settings.xml')
+        maven('deploy --settings ambiente/maven/settings.xml')
     }
 }
 
@@ -32,7 +32,7 @@ job('conchayoro/deploy-tomcat') {
     }
 
     steps {
-        shell('mvn tomcat7:deploy --settings ambiente/maven/settings.xml')
-        shell('mvn tomcat7:redeploy --settings ambiente/maven/settings.xml')
+        maven('tomcat7:deploy --settings ambiente/maven/settings.xml')
+        maven('tomcat7:redeploy --settings ambiente/maven/settings.xml')
     }
 }
