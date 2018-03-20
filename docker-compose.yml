@@ -90,7 +90,6 @@ services:
       - /root/.m2
       - .:/usr/src/mymaven
 
-
 networks:
   webnet:
 
