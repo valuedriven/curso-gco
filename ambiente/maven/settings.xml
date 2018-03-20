@@ -33,7 +33,7 @@
     <mirror>
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://localhost:8081/repository/maven-public/</url>
+      <url>http://nexus:8081/repository/maven-public/</url>
     </mirror>
   </mirrors>
 
@@ -64,7 +64,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-      <sonar.host.url>http://localhost:8083</sonar.host.url>
+      <sonar.host.url>http://sonar:8083</sonar.host.url>
       </properties>
     </profile>
   </profiles>
