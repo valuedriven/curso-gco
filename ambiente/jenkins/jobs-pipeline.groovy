@@ -48,9 +48,4 @@ pipelineJob('conchayoro-pipeline') {
 
   }
 
-  configure {
-
-     it / definition / lightweight(true)
-
-  }
 }
