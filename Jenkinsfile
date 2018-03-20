@@ -12,6 +12,8 @@ pipeline {
           sh "mvn clean --settings ambiente/maven/settings.xml"
           sh "mvn compile --settings ambiente/maven/settings.xml"
           sh "mvn package --settings ambiente/maven/settings.xml"
+          sh "mvn install --settings ambiente/maven/settings.xml"
+          sh "mvn deploy --settings ambiente/maven/settings.xml"
 
         }
 
@@ -19,20 +21,16 @@ pipeline {
 
       stage("Aceitação") { 
         steps {
-          sh "echo 'estagio Acceptance'"
+          sh "mvn tomcat7:redeploy --settings ambiente/maven/settings.xml"
+
         }
       }
       stage("Entrega") { 
         steps {
-          sh "echo 'deliver stage'"
+          sh "echo 'Estágio de entrega'"
         }
       }
    }
-   post {
-        always {
-            sh "docker-compose down -v"
-        }
-    }
 }
 
 
